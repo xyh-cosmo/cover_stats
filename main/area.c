@@ -308,17 +308,17 @@ int main(int argc, char *argv[]) {
 	
 	int i,j;
 	
-	FILE *dat = fopen("../SM_config20171103_c5_290_1_mius.dat","r");
+	FILE *dat = fopen("results/new_sky.dat","r");
 	int MAXLINE_STRING = 1000;
 	char line[MAXLINE_STRING];
 	char start[3] = "#";
 	int datNum = 0;
 	
-	int uNumber1 = 0;
-	int unUNumber1 = 0;
+	int uNumber1 = 0;	//
+	int unUNumber1 = 0;	//
 	
-	int uNumber2 = 0;
-	int unUNumber2 = 0;
+	int uNumber2 = 0;	//
+	int unUNumber2 = 0;	//
 	
 	//int fileNum = 0;
 	
@@ -354,10 +354,10 @@ int main(int argc, char *argv[]) {
 			if(cNum == 2){//黄经
 				lon = atof(p);
 			}
-			if(cNum == 4){
-				coverNum = atof(p);
-			}
-			if(cNum == 14){
+			// if(cNum == 4){
+			// 	coverNum = atof(p);
+			// }
+			if(cNum == 14){//是否在极深度巡天区域
 				deepFlag = atof(p);
 			}
 			cNum++;
@@ -581,21 +581,20 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		
-		double coor_z = 1000000 * sin(lat * 2 * M_PI / 360);
-		double coor_x = 1000000 * cos(lat * 2 * M_PI / 360) * cos(lon * 2 * M_PI / 360);
-		double coor_y = 1000000 * cos(lat * 2 * M_PI / 360) * sin(lon * 2 * M_PI / 360);
+		double coor_z = sin(lat * 2 * M_PI / 360);
+		double coor_x = cos(lat * 2 * M_PI / 360) * cos(lon * 2 * M_PI / 360);
+		double coor_y = cos(lat * 2 * M_PI / 360) * sin(lon * 2 * M_PI / 360);
 		
 		double t_coor[3] = { coor_x, coor_y, coor_z };
-		double r_coor[3];
+		double r_coor[3], ll_coor[2];
+		
 		CoordinateSpin(t_coor, r_coor, -23.4522, 3);
-		double ll_coor[2];
 		Cartesian2Equatorial(r_coor, ll_coor);
 
 		double bn = 57.2957795
-			* asin(
-					-0.867666 * cos(ll_coor[0] / 57.2957795) * cos(ll_coor[1] / 57.2957795)
-							- 0.1980764 * sin(ll_coor[0] / 57.2957795) * cos(ll_coor[1] / 57.2957795)
-							+ 0.455984 * sin(ll_coor[1] / 57.2957795));
+				  * asin( -0.867666 * cos(ll_coor[0] / 57.2957795) * cos(ll_coor[1] / 57.2957795)
+						 - 0.1980764 * sin(ll_coor[0] / 57.2957795) * cos(ll_coor[1] / 57.2957795)
+						 + 0.455984 * sin(ll_coor[1] / 57.2957795));
 							
 		if(fabs(bn)>=20 && fabs(lat)>=20){
 			if (isUlity >0){
