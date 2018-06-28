@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "gsl_math.h": "c",
+        "ctype.h": "c"
+    }
+}
