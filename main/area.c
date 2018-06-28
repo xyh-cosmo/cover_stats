@@ -343,15 +343,15 @@ int main(int argc, char *argv[]) {
 		
 		int cNum = 0;
 		double deepFlag = -1;
-		lon = -9999, lat = -9999;
+		lon = -9999, lat = -9999; // added here to avoid compilation uninitialization warnings
 		while (p != NULL && cNum<15) {
 			if(cNum == 0){
 				n_time = atof(p);
 			}
-			if(cNum == 1){
+			if(cNum == 1){//黄纬
 				lat = atof(p);
 			}
-			if(cNum == 2){
+			if(cNum == 2){//黄经
 				lon = atof(p);
 			}
 			if(cNum == 4){
